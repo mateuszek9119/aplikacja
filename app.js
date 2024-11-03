@@ -1,8 +1,15 @@
 var createError = require('http-errors');
+var cookieSession = require('cookie-session')
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var config = require('./config');
+var mongoose = require('mongoose')
+
+mongoose.connect(config.db)
+  .then(() => console.log('Connected db!'))
+  .catch(err => console.log("NOT connect db!"))
 
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
@@ -21,6 +28,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// h: wYoXTHkMV60VnRZY
+//mongodb+srv://admin:wYoXTHkMV60VnRZY@cluster0.15mpl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+app.use(cookieSession({
+  name: 'session',
+  keys: config.keySession,
+
+  // Cookie Options
+  maxAge: config.maxAgeSession
+}))
 
 
 app.use((req, res, next) => {
