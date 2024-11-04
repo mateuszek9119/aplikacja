@@ -70,3 +70,5 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+// mongodb+srv://admin:wYoXTHkMV60VnRZY@cluster0.15mpl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
